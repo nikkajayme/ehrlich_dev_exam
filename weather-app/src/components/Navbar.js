@@ -10,6 +10,7 @@ const Navbar = () => {
                 <span />
                 <span />
             </div>
+            <button>logout</button>
         </nav>
     );
 };
