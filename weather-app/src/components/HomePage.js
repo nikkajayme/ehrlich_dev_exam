@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react';
 
 import { Link } from 'react-router-dom';
-
+import { useAuth0 } from '@auth0/auth0-react';
 import { WeatherContext } from '../contexts/WeatherContext';
 
 const HomePage = () => {
     const { city, setCity } = useContext(WeatherContext);
     const [warning, setWarning] = useState(false);
+    const { user } = useAuth0();
+
     const handleSearch = (event) => {
         setCity(event.target.value);
     };
@@ -14,12 +16,11 @@ const HomePage = () => {
         city ? setWarning(warning) : setWarning(!warning);
     };
 
-    console.log(warning);
     return (
         <>
             <section>
                 <p>Welcome!</p>
-                <p>John Smith</p>
+                <p>{user.name}</p>
                 <input
                     type="text"
                     placeholder="City"
