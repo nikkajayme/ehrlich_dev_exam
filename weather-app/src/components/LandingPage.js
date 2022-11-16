@@ -14,18 +14,22 @@ const LandingPage = () => {
     }
 
     return (
-        <>
-            <section>
-                <p>Weather Forecast</p>
-                <p>
-                    Welcome
-                    <br />
-                    Please login with you Github user to use the application and
-                    view the weather.
-                </p>
-                <button onClick={() => loginWithRedirect({})}>login</button>
-            </section>
-        </>
+        <section className="w-full h-screen bg-gradient-to-b from-dark-teal to-dark-green text-center">
+            <p className="text-white text-2xl pt-14">Weather Forecast</p>
+            <p className="max-w-[290px] mx-auto text-lg text-bright-teal mt-10">
+                Welcome!
+                <br />
+                <br />
+                Please login with your Github user to use the application and
+                view the weather.
+            </p>
+            <button
+                className="bg-batman border-2 border-bright-teal px-14 py-2 rounded-full text-bright-teal mt-16"
+                onClick={() => loginWithRedirect({})}
+            >
+                login
+            </button>
+        </section>
     );
 };
 

@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+
+import { Link, Navigate } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -11,6 +13,8 @@ const Weather = () => {
     const [main, setMain] = useState([]);
     const [desc, setDesc] = useState([]);
     const { city } = useContext(WeatherContext);
+
+    const { isLoading, isAuthenticated } = useAuth0();
 
     const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -27,47 +31,91 @@ const Weather = () => {
             .catch((error) => console.log(error));
     }, [city]);
 
+    console.log(isAuthenticated);
     console.log(weather);
+
+    if (isLoading) {
+        return (
+            <section className="w-full h-screen bg-gradient-to-b from-dark-teal to-dark-green text-center">
+                <p className="text-white text-2xl pt-14">Loading...</p>
+            </section>
+        );
+    } else if (!isAuthenticated) {
+        alert('User not logged in. Please login');
+        return (
+            <Navigate
+                to="/"
+                replace
+            />
+        );
+    }
 
     return (
         <>
-            <section>
-                <p>{weather.name}</p>
-                <p>{weather.dt}</p>
-                <p>{main.temp}</p>
-                <p>{main.pressure}</p>
-                <p>{main.humidity}</p>
-                <p>{desc.description}</p>
-                <p>{desc.main}</p>
-                {/* <table>
-                    <thead>
-                        <tr>
-                            <td>
-                                {`(mm/dd/yyyy)`}
-                                {weather.dt}
-                            </td>
-                            <td>{`Temp(F)`}</td>
-                            <td>Description</td>
-                            <td>Main</td>
-                            <td>Pressure</td>
-                            <td>Humidity</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{weather.dt}</td>
-                            <td>{weather['main'].temp}</td>
-                            <td>{weather.weather[0].description}</td>
-                            <td>{weather.weather[0].main}</td>
-                            <td>{weather.main.pressure}</td>
-                            <td>{weather.main.humidity}</td>
-                        </tr>
-                    </tbody>
-                </table> */}
-                <Link to="/home">
-                    <button>back</button>
-                </Link>
-            </section>
+            {isLoading ? (
+                <p>loading...</p>
+            ) : (
+                <section className="w-full h-screen bg-gradient-to-b from-dark-teal to-dark-green text-center">
+                    <p className="text-2xl text-center text-white pt-10">
+                        {weather.name}
+                    </p>
+                    <table className="text-left bg-trans-teal w-[285px] mx-auto mt-10 text-bright-teal text-md">
+                        <thead>
+                            <tr className="h-16 border-b border-bright-teal">
+                                <td className="pl-2">
+                                    <p>Date</p>
+                                </td>
+                                <td>
+                                    <p>
+                                        {new Date(
+                                            weather.dt * 1000
+                                        ).toDateString()}
+                                    </p>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className="h-16 border-b border-bright-teal">
+                                <td className="pl-2">
+                                    <p>Temp</p>
+                                </td>
+                                <td>
+                                    <p>{main.temp}</p>
+                                </td>
+                            </tr>
+                            <tr className="h-16 border-b border-bright-teal">
+                                <td className="pl-2">
+                                    <p>Pressure</p>
+                                </td>
+                                <td>
+                                    <p>{main.pressure}</p>
+                                </td>
+                            </tr>
+                            <tr className="h-16 border-b border-bright-teal">
+                                <td className="pl-2">
+                                    <p>Humidity</p>
+                                </td>
+                                <td>
+                                    <p>{main.humidity}</p>
+                                </td>
+                            </tr>
+                            <tr className="h-16">
+                                <td className="pl-2">
+                                    <p>Desc</p>
+                                </td>
+                                <td>
+                                    <p>{desc.description}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <Link to="/home">
+                        <button className="bg-batman border-2 border-bright-teal px-14 py-2 rounded-full text-bright-teal mt-10">
+                            back
+                        </button>
+                    </Link>
+                </section>
+            )}
         </>
     );
 };

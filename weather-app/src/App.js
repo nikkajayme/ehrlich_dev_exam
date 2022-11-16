@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
+import Auth0ProviderWithHistory from './auth/Auth0ProviderWithHistory';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
