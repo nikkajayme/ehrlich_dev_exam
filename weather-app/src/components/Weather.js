@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-
 import { useAuth0 } from '@auth0/auth0-react';
-
 import { Link, Navigate } from 'react-router-dom';
-
 import axios from 'axios';
 
 import { WeatherContext } from '../contexts/WeatherContext';

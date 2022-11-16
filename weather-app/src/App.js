@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Auth0ProviderWithHistory from './auth/Auth0ProviderWithHistory';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import LandingPage from './components/LandingPage';
 import HomePage from './components/HomePage';
-import Weather from './components/Weather';
+import LandingPage from './components/LandingPage';
 import Navbar from './components/Navbar';
-
+import Weather from './components/Weather';
 import { WeatherContext } from './contexts/WeatherContext';
 
 const App = () => {
