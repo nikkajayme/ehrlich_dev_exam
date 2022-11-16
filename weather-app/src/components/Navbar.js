@@ -6,7 +6,6 @@ import { ReactComponent as Cloud } from '../assets/logos/cloud.svg';
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { logout, isAuthenticated } = useAuth0();
-
     const logoutWithRedirect = () =>
         logout({ returnTo: window.location.origin });
 
@@ -15,13 +14,35 @@ const Navbar = () => {
             <Cloud />
             <div
                 id="burger"
-                className="h-7 flex flex-col justify-between"
+                className={`h-7 flex flex-col justify-between md:hidden ${
+                    !isAuthenticated ? 'hidden' : 'none'
+                }`}
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <div className="h-1 bg-bright-teal w-10 rounded-sm" />
-                <div className="h-1 bg-bright-teal w-10 rounded-sm" />
-                <div className="h-1 bg-bright-teal w-10 rounded-sm" />
+                <div
+                    className={`h-1 bg-bright-teal w-10 rounded-sm transition ${
+                        isOpen ? '-rotate-45 translate-y-4' : null
+                    }`}
+                />
+                <div
+                    className={`h-1 bg-bright-teal w-10 rounded-sm transition ${
+                        isOpen ? 'opacity-0' : 'opacity-100'
+                    }`}
+                />
+                <div
+                    className={`h-1 bg-bright-teal w-10 rounded-sm transition ${
+                        isOpen ? 'rotate-45 -translate-y-2' : null
+                    }`}
+                />
             </div>
+            {isAuthenticated && (
+                <button
+                    className="bg-batman border-2 border-bright-teal px-14 py-2 rounded-full text-bright-teal hidden md:block"
+                    onClick={() => logoutWithRedirect()}
+                >
+                    logout
+                </button>
+            )}
             <div
                 className={`absolute z-10 bg-batman right-1/2 translate-x-1/2 h-[400px] top-36 drop-shadow-lg transition ${
                     isOpen ? 'none opacity-100' : 'hidden opacity-0'

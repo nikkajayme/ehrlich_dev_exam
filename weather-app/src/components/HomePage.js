@@ -1,9 +1,7 @@
 import React, { useContext, useState } from 'react';
-
-import { Navigate } from 'react-router-dom';
-
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+
 import { WeatherContext } from '../contexts/WeatherContext';
 
 const HomePage = () => {
